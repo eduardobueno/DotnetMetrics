@@ -40,6 +40,8 @@ app.UseEndpoints(endpoints =>
     endpoints.MapMetrics();
 });
 
+app.MapHealthChecks("/healthz");
+
 app.Run();
 
 eventCounterRegistration.Dispose();
