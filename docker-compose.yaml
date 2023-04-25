@@ -1,12 +1,22 @@
-version: "1.0"
+version: "2.0"
 
 services:
+  dotnetmetricsapi:
+    image: eduardobueno75/dotnetmetrics:latest
+    container_name: dotnetmetricsapi
+    ports:
+      - 8080:80
+    networks:
+      - dotnetmetrics
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     restart: always
     ports:
       - 9090:9090
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
     networks:
       - dotnetmetrics
 
