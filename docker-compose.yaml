@@ -1,5 +1,9 @@
 version: "2.0"
 
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
 services:
   dotnetmetricsapi:
     image: eduardobueno75/dotnetmetrics:latest
@@ -17,6 +21,19 @@ services:
       - 9090:9090
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - dotnetmetrics
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
     networks:
       - dotnetmetrics
 
